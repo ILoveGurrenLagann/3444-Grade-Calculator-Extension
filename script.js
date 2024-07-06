@@ -1,5 +1,5 @@
 
-    import { parse } from './parser.js'
+    import { parse } from './parser3.js'
     import { drawCalendar } from './GradeCalculation.js';
     import { resetCalendar } from './GradeCalculation.js';
     function submit() {
