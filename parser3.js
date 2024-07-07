@@ -291,7 +291,7 @@ function peg$parse(input, options) {
   var peg$f9 = function(category) {return category.join('')};
   var peg$f10 = function(date) {return date.join('');};
   var peg$f11 = function(duedate) {return duedate.join('');};
-  var peg$f12 = function(score) { 
+  var peg$f12 = function(score, outof) { 
     	score.join('');
     	if(score === '-' || score.length === 0)
     	{
@@ -299,7 +299,7 @@ function peg$parse(input, options) {
         }
        else
        {
-			return score.join('');
+			return [score.join(''), outof.join('')];
        }
     };
   var peg$f13 = function() {return '';};
@@ -1787,7 +1787,7 @@ function peg$parse(input, options) {
       }
       if (s8 !== peg$FAILED) {
         peg$savedPos = s0;
-        s0 = peg$f12(s2);
+        s0 = peg$f12(s2, s6);
       } else {
         peg$currPos = s0;
         s0 = peg$FAILED;
