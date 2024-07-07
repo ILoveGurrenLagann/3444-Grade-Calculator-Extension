@@ -65,8 +65,30 @@
 
         for(let assignment of assignments)
         {
-            
+            var grade;
+            //console.log(JSON.stringify(assignment, null, 2));
             let assgn_category = assignment[1];
+            let assgn_grade = assignment[3];
+            //console.log(assgn_grade);
+            if(assgn_grade.length === 1)
+            {
+                assignment.splice(3, 1);
+            }
+            assgn_grade = assignment[3];
+            //console.log(JSON.stringify(assignment, null, 2));
+            //console.log("\tpost splice assgn_grade: " + assgn_grade);
+            if(assgn_grade[0] != '-')
+            {
+                grade = (assgn_grade[0] / assgn_grade[1]) * 100;
+            }
+            else
+            {
+                grade = '-';
+            }
+            
+           
+            
+            assgn_grade.splice(0, 2, grade);
             for(let category of categories)
             {
                 if(assgn_category === category[0])
@@ -74,14 +96,13 @@
                     assignment[1] = [assgn_category, category[1]];
                 }
             }
-            console.log("assignment[2]: " + assignment[2]);
             if(typeof(assignment[2]) != 'undefined' && assignment[2] != null && !assignment.includes(", 20"))
             {
                 assignment[2] = assignment[2].slice(0, 6) + ", 2024" + assignment[2].slice(6);
             }
         }
         console.log("*************************************************");
-        console.log(JSON.stringify(assignments, null, 2));
+        //console.log(JSON.stringify(assignments, null, 2));
         return [assignments, categories];
 
     }
