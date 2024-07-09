@@ -295,7 +295,7 @@ function peg$parse(input, options) {
     	score.join('');
     	if(score === '-' || score.length === 0)
     	{
-			return '-';
+			return ['-', outof];
         }
        else
        {
@@ -305,7 +305,7 @@ function peg$parse(input, options) {
   var peg$f13 = function() {return '';};
   var peg$f14 = function() {return '';};
   var peg$f15 = function() {return '';};
-  var peg$f16 = function(officialcategory, weight) {return officialcategory.join('') + " " + weight.join('')};
+  var peg$f16 = function(officialcategory, weight) {return [officialcategory.join(''), weight.join('')]};
   var peg$currPos = options.peg$currPos | 0;
   var peg$savedPos = peg$currPos;
   var peg$posDetailsCache = [{ line: 1, column: 1 }];
