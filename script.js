@@ -3,8 +3,6 @@
     import { drawCalendar } from './calendar.js';
     import { resetCalendar } from './calendar.js';
     import { Course } from './GradeCalculation.js';
-    import { Grade } from './GradeCalculation.js';
-    import { AssignmentType } from './GradeCalculation.js';
 
     var gradeGoal = 0;
     function submit() {
@@ -100,7 +98,7 @@
                 if(result[itr] != null && result[itr].constructor == Array)
                 {
                     cleanUp(result[itr]);
-                    if(itr != 3 && result[itr].length === 0)
+                    if(itr != 3 &&  result[itr].length === 0)
                     {
                         result.splice(itr, 1);
                     }
