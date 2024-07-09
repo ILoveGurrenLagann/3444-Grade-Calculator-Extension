@@ -19,9 +19,10 @@
             background-color: #f2f2f2;
         }
     </style>
+    <script src="GradeCalculation.js" type="module"></script>
+    <script src="script.js" type="module"></script>
 </head>
 <body>
-    <script src="script.js" type="module"></script>
     <!--NavBar-->  
     <nav>
         <input type="checkbox" id="sidebar-active">
@@ -44,7 +45,7 @@
     <p>
         Using Canvas Grades is easy, simply paste in your grades page from canvas below, choose your desired grade from among the buttons, and then submit!
     </p>
-    <h2>Grade Calculator</h2>
+
     <!--main--> 
     <div class="wrap-box">
         <div>
@@ -52,20 +53,21 @@
             <textarea id="entry" name="entry" placeholder="Paste Your Grades Here" rows="20" cols="50"></textarea>
         </div>
         <br>
-        <button style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
+        <button onClick="setGradeGoal('A')" id="A" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
             A (90%-100%)
         </button>
-        <button style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
+        <button onClick="setGradeGoal('B')" id="B" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
             B (80%-89%)
         </button>
-        <button style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
+        <button onClick="setGradeGoal('C')" id="C" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
             C (70%-79%)
         </button>
-        <button style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
+        <button onClick="setGradeGoal('D')" id="D" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
             D (60%-69%)
         </button>
         <div>
             <button onclick="submit()" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Submit</button>
+            <input type="hidden" id="errorBox" color="" readonly></input>
         </div>
         <div>
             <button onclick="reset()" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Reset</button>
