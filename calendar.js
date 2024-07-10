@@ -3,7 +3,6 @@ export function drawCalendar(assignments){
 
     assignments.forEach(assignment => 
     {
-        //console.log(JSON.stringify(assignment, null, 2))
         const row = document.createElement('tr');
         const dateCell = document.createElement('td');
         const nameCell = document.createElement('td');

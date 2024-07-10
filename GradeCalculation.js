@@ -15,11 +15,15 @@ export class Course {
             throw new Error("Argument must be an assignmentType");
         }
     }
+    getAssignmentTypes()
+    {
+        return this.assignmentTypes;
+    }
 
     readAssignmentType() {
         this.assignmentTypes.forEach(assignmentType => {
-            console.log(assignmentType.getAssignmentName());
-            console.log(assignmentType.getAssignmentWeight());
+            //console.log(assignmentType.getAssignmentName());
+            //console.log(assignmentType.getAssignmentWeight());
 
         });
     }
@@ -37,7 +41,7 @@ export class Course {
         const gradeTypeIndex = this.assignmentTypes.findIndex(assignment => assignment.getAssignmentName() === type);
 
         if(gradeTypeIndex == -1){
-            console.log("grade can not be added: does not match a weight.");
+            //console.log("grade can not be added: does not match a weight.");
             return;
         }
 
@@ -51,7 +55,7 @@ export class Course {
         this.assignmentTypes.forEach((assignmentType) => {
 
             const assignmentAvg = assignmentType.getAssignmentTypeAverage();
-            console.log(assignmentType.getAssignmentName() + "assignmentAvg: " + assignmentAvg);
+            //console.log(assignmentType.getAssignmentName() + "assignmentAvg: " + assignmentAvg);
             const assignmentWeight = assignmentType.getAssignmentWeight();
 
             if(assignmentType.isEmpty === false)
@@ -66,10 +70,10 @@ export class Course {
 
         //AverageCalcuation here.
         const totalWeight = assignmentWeightArray.reduce((sum, weight) => sum + weight, 0);
-        console.log(JSON.stringify(assignmentWeightArray, null, 2));
-        console.log(JSON.stringify(assignmentTypeAverageArray, null, 2));
+        //console.log(JSON.stringify(assignmentWeightArray, null, 2));
+        //console.log(JSON.stringify(assignmentTypeAverageArray, null, 2));
         const weightedAverage = assignmentTypeAverageArray.reduce((sum, avg, index) => sum + (avg * assignmentWeightArray[index]), 0) / totalWeight;
-        console.log(JSON.stringify(weightedAverage, null, 2));
+        //console.log(JSON.stringify(weightedAverage, null, 2));
         this.average = weightedAverage;
 
         return this.average;
@@ -90,7 +94,7 @@ export class Course {
             index = assignmentType.grades.findIndex(grade => grade.getScore() === "-"); //selects the first empty grade in each type's list, calculates based off that.
 
             if (index === -1) {
-                console.log(`No future assignment found for type ${assignmentType.getAssignmentName()}`);
+                //console.log(`No future assignment found for type ${assignmentType.getAssignmentName()}`);
                 return;
             }
   
@@ -110,11 +114,13 @@ export class Course {
             
             index = assignmentType.grades.findIndex(grade => grade.getGradeTitle() === title); //selects the first empty grade in each type's list, calculates based off that.
             if(index === -1){
-                console.log("Error: Grade title not found.");
+                //console.log(title)
+                //console.log("Error: Grade title not found.");
                 return;
             }
-
-            console.log(assignmentType.getScoreNeeded(index));
+            var ret = assignmentType.getScoreNeeded(index);
+            console.log(ret);
+            return ret;
         });
     }
 
@@ -126,6 +132,7 @@ export class AssignmentType {
       this.weight = weight;
       this.grades = [];
       this.isEmpty = true;
+      this.hasDash = false;
     }
 
     addGrade(title, type, score, dueDate) {
@@ -135,6 +142,13 @@ export class AssignmentType {
             if(score != "-")
             {
                 this.isEmpty = false;
+            }
+        }
+        if(!this.hasDash)
+        {
+            if(score === '-')
+            {
+                this.hasDash = true;
             }
         }
 
@@ -152,6 +166,10 @@ export class AssignmentType {
     getAssignmentName(){
         return this.name;
     }
+    getAssignments()
+    {
+        return this.grades;
+    }
 
     setScoreNeeded(scoreNeeded, index){
         this.grades[index].setScoreNeeded(scoreNeeded);
@@ -167,12 +185,12 @@ export class AssignmentType {
         let total = 0;
 
         for(var i = 0; i < this.grades.length; i++) {
-            console.log(this.grades[i].getScore());
+            //console.log(this.grades[i].getScore());
 
             //if the grade is entered, score is added to the array.
             if(typeof this.grades[i].getScore() != 'string'){
                 total += this.grades[i].getScore();
-                console.log("score for " + this.grades[i].getGradeTitle() + " added");
+                //console.log("score for " + this.grades[i].getGradeTitle() + " added");
             }
             else{
                 dropped++;
@@ -226,26 +244,26 @@ course.addGrade("Homework1", "Homework", 90, "dueDate1");
 course.addGrade("Quiz1", "Quiz", 85, "dueDate2");
 course.addGrade("Test1", "Test", 90, "dueDate3");
 
-console.log(" ")
+//console.log(" ")
 
 course.calculateAverage();
-console.log(course.getAverage());
+//console.log(course.getAverage());
 
-console.log(" ")
+//console.log(" ")
 
 course.addGrade("Homework2", "Homework", "-", "dueDate4");
 course.addGrade("Quiz2", "Quiz", "-", "dueDate5");
 course.addGrade("Test2", "Test", "-", "dueDate6");
 
-console.log(" ")
+//console.log(" ")
 
 course.calcFutureGradesByType();
 
-console.log(" ")
+//console.log(" ")
 
 course.getNeededGrade("Quiz2");
-console.log(" ")
+//console.log(" ")
 course.getNeededGrade("Homework2");
-console.log(" ")
+//console.log(" ")
 course.getNeededGrade("Test2");
  */
