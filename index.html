@@ -19,10 +19,10 @@
             background-color: #f2f2f2;
         }
     </style>
-    <script src="GradeCalculation.js" type="module"></script>
-    <script src="script.js" type="module"></script>
 </head>
 <body>
+    <script src="GradeCalculation.js" type="module"></script>
+    <script src="script.js" type="module"></script>
     <!--NavBar-->  
     <nav>
         <input type="checkbox" id="sidebar-active">
@@ -71,6 +71,13 @@
         </div>
         <div>
             <button onclick="reset()" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Reset</button>
+            <select id="calcSelect">
+            </select>
+            <button onclick="calculate()" id="Calculate" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Calculate</button>
+        </div>
+        <div>
+            <label for "grade-needed">Grade Needed: </label>
+            <input id="grade-needed" type="text" readonly>
         </div>
         <br>
     </div>
