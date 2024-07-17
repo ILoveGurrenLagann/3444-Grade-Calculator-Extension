@@ -108,20 +108,13 @@ export class Course {
 
     //parses through all assignments to find a grade. Will be replaced with a more efficient function.
     getNeededGrade(title){
-
-        let index = 0;
-        this.assignmentTypes.forEach(assignmentType => {
-            
-            index = assignmentType.grades.findIndex(grade => grade.getGradeTitle() === title); //selects the first empty grade in each type's list, calculates based off that.
-            if(index === -1){
-                //console.log(title)
-                //console.log("Error: Grade title not found.");
-                return;
+        for (const assignmentType of this.assignmentTypes) {
+            const index = assignmentType.grades.findIndex(grade => grade.getGradeTitle() === title);
+            if (index !== -1) {
+                return assignmentType.getScoreNeeded(index);
             }
-            var ret = assignmentType.getScoreNeeded(index);
-            console.log(ret);
-            return ret;
-        });
+        }
+        return undefined; // Return undefined if the grade is not found
     }
 
 }
