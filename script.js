@@ -70,7 +70,7 @@
             //dropdown.appendChild()
             //console.log("incr");
             var calcButton = document.getElementById("Calculate");
-            currCourse.getNeededGrade("SRS In-class Review");
+            let neededGrade = currCourse.getNeededGrade("SRS In-class Review");
             if (neededGrade !== undefined) {
                 console.log(neededGrade);
             } else {
