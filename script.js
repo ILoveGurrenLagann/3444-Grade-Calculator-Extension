@@ -118,6 +118,13 @@
         document.getElementById("entry").value = '';
         resetCalendar();
         gradeGoal = 0;
+        
+        let dropdown = document.getElementById("calcSelect");
+        while (dropdown.options.length > 0) {
+            dropdown.remove(0);
+        }
+        document.getElementById("grade-needed").value = '';
+
     }
     function cleanUp(result) {
         if(result != null && typeof(result) != 'undefined' && result.constructor === Array) //https://stackoverflow.com/questions/767486/how-do-i-check-if-a-variable-is-an-array-in-javascript
