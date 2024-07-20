@@ -1,17 +1,47 @@
 class Course {
-    constructor(name, average) {
+    constructor(name, desiredAverage) {
       this.name = name;
       this.average = 100;
-      this.desiredAverage = 0; //replace with user input in whatever way you like
+      this.desiredAverage = desiredAverage; //replace with user input in whatever way you like
       this.assignmentTypes = [];
     }
 
-    addAssignmentType(assignmentType) {
+    addAssignmentType(name, weight) {
+        let assignmentType = new AssignmentType(name, weight);
+
         if (assignmentType instanceof AssignmentType) {
             this.assignmentTypes.push(assignmentType);
         } else {
             throw new Error("Argument must be an assignmentType");
         }
+    }
+
+    readAssignmentType() {
+        this.assignmentTypes.forEach(assignmentType => {
+            console.log(assignmentType.getAssignmentName());
+            console.log(assignmentType.getAssignmentWeight());
+
+        });
+    }
+
+    getName(){
+        return(this.name);
+    }
+
+    getAverage(){
+        return(this.average);
+    }
+
+    addGrade(title, type, score, dueDate){
+         //finds the grade type (weight) which matches with the inputted type.
+        const gradeTypeIndex = this.assignmentTypes.findIndex(assignment => assignment.getAssignmentName() === type);
+
+        if(gradeTypeIndex == -1){
+            console.log("grade can not be added: does not match a weight.");
+            return;
+        }
+
+        this.assignmentTypes[gradeTypeIndex].addGrade(title, type, score, dueDate)
     }
 
     calculateAverage(){
@@ -34,7 +64,8 @@ class Course {
         const totalWeight = assignmentWeightArray.reduce((sum, weight) => sum + weight, 0);
         const weightedAverage = assignmentTypeAverageArray.reduce((sum, avg, index) => sum + (avg * assignmentWeightArray[index]), 0) / totalWeight;
         this.average = weightedAverage;
-        return;
+
+        return this.average;
     }
 
     // This will calculate the grade needed for the first future assignment in each assignment weight type.
@@ -47,12 +78,37 @@ class Course {
         let scoreNeeded = 0;
 
         this.assignmentTypes.forEach((assignmentType) => {
-            index = assignmentType.grades.indexOf("-"); //selects the first empty grade in each type's list, calculates based off that.
+            //TODO: put a failsafe here, in case no grades are marked with an index of "-".
+
+            index = assignmentType.grades.findIndex(grade => grade.getScore() === "-"); //selects the first empty grade in each type's list, calculates based off that.
+
+            if (index === -1) {
+                console.log(`No future assignment found for type ${assignmentType.getAssignmentName()}`);
+                return;
+            }
   
-            scoreNeeded = ((this.desiredAverage * (1 - assignmentType.weight) * this.average)/assignmentType.weight); //calculates needed score for first future assignment of that weight.
-            assignmentType.grades[index].setScoreNeeded();
+            scoreNeeded = ((this.desiredAverage - (1 - assignmentType.getAssignmentWeight()) * this.average)/assignmentType.getAssignmentWeight()); //calculates needed score for first future assignment of that weight.
+
+            assignmentType.setScoreNeeded(scoreNeeded, index);
+
         });
         
+    }
+
+    //parses through all assignments to find a grade. Will be replaced with a more efficient function.
+    getNeededGrade(title){
+
+        let index = 0;
+        this.assignmentTypes.forEach(assignmentType => {
+            
+            index = assignmentType.grades.findIndex(grade => grade.getGradeTitle() === title); //selects the first empty grade in each type's list, calculates based off that.
+            if(index === -1){
+                console.log("Error: Grade title not found.");
+                return;
+            }
+
+            console.log(assignmentType.getScoreNeeded(index));
+        });
     }
 
 }
@@ -64,7 +120,10 @@ class AssignmentType {
       this.grades = [];
     }
 
-    addGrade(grade) {
+    addGrade(title, type, score, dueDate) {
+
+        let grade = new Grade(title, type, score, dueDate);
+
         if (grade instanceof Grade) {
             this.grades.push(grade);
         } else {
@@ -76,14 +135,36 @@ class AssignmentType {
         return this.weight;
     }
 
+    getAssignmentName(){
+        return this.name;
+    }
+
+    setScoreNeeded(scoreNeeded, index){
+        this.grades[index].setScoreNeeded(scoreNeeded);
+    }
+
+    getScoreNeeded(index){
+        return this.grades[index].getScoreNeeded();
+    }
+
     getAssignmentTypeAverage(){
         if (this.grades.length === 0) return 0;
-
+        let dropped = 0; //used to drop grades not yet published.
         let total = 0;
+
         for(var i = 0; i < this.grades.length; i++) {
-        total += this.grades[i].score;
+            console.log(this.grades[i].getScore());
+
+            //if the grade is entered, score is added to the array.
+            if(typeof this.grades[i].getScore() != 'string'){
+                total += this.grades[i].getScore();
+                console.log("score for " + this.grades[i].getGradeTitle() + " added");
+            }
+            else{
+                dropped++;
+            }
         }
-        return total / this.grades.length;
+        return total / (this.grades.length - dropped);
     }
 }
 
@@ -97,6 +178,10 @@ class Grade {
         this.scoreNeeded = -1;
     }
 
+    getScore(){
+        return this.score;
+    }
+
     setScoreNeeded(scoreNeeded){
         this.scoreNeeded = scoreNeeded;
     }
@@ -104,4 +189,55 @@ class Grade {
     getScoreNeeded(){
         return this.scoreNeeded;
     }
+
+    getGradeTitle(){
+        return this.title
+    }
 }
+
+//creates a course with a name and a desired average.
+let course = new Course("Course1", 90);
+
+console.log(course.getName());
+
+
+console.log(" ");
+
+//course.addAssignmentType(Name, weight);
+course.addAssignmentType("Homework", .20);
+course.addAssignmentType("Quiz", .30);
+course.addAssignmentType("Test", .50);
+
+course.readAssignmentType();
+
+
+//course.addGrade(title, type, score, dueDate);
+
+course.addGrade("Homework1", "Homework", 90, "dueDate1");
+course.addGrade("Quiz1", "Quiz", 85, "dueDate2");
+course.addGrade("Test1", "Test", 90, "dueDate3");
+
+console.log(" ")
+
+course.calculateAverage();
+console.log(course.getAverage());
+
+console.log(" ")
+
+course.addGrade("Homework2", "Homework", "-", "dueDate4");
+course.addGrade("Quiz2", "Quiz", "-", "dueDate5");
+course.addGrade("Test2", "Test", "-", "dueDate6");
+
+console.log(" ")
+
+course.calcFutureGradesByType();
+
+console.log(" ")
+
+course.getNeededGrade("Quiz2");
+console.log(" ")
+course.getNeededGrade("Homework2");
+console.log(" ")
+course.getNeededGrade("Test2");
+
+
