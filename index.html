@@ -5,27 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas Grades Made Easy</title>
     <link rel="stylesheet" href="Main.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
     <script src="GradeCalculation.js" type="module"></script>
     <script src="script.js" type="module"></script>
     <!--NavBar-->  
     <nav>
-        <input type="checkbox" id="sidebar-active">
         <label for="sidebar-active" class="open-sidebar-button"> 
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
         </label>
@@ -53,30 +38,22 @@
             <textarea id="entry" name="entry" placeholder="Paste Your Grades Here" rows="20" cols="50"></textarea>
         </div>
         <br>
-        <button onClick="setGradeGoal('A')" id="A" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
-            A (90%-100%)
-        </button>
-        <button onClick="setGradeGoal('B')" id="B" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
-            B (80%-89%)
-        </button>
-        <button onClick="setGradeGoal('C')" id="C" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
-            C (70%-79%)
-        </button>
-        <button onClick="setGradeGoal('D')" id="D" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">
-            D (60%-69%)
-        </button>
+        <button onClick="setGradeGoal('A')" id="A">A (90%-100%)</button>
+        <button onClick="setGradeGoal('B')" id="B">B (80%-89%)</button>
+        <button onClick="setGradeGoal('C')" id="C">C (70%-79%)</button>
+        <button onClick="setGradeGoal('D')" id="D">D (60%-69%)</button>
         <div>
-            <button onclick="submit()" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Submit</button>
+            <button onclick="submit()">Submit</button>
             <input type="hidden" id="errorBox" color="" readonly></input>
         </div>
         <div>
-            <button onclick="reset()" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Reset</button>
+            <button onclick="reset()">Reset</button>
             <select id="calcSelect">
             </select>
-            <button onclick="calculate()" id="Calculate" style="font-size:15px; background-color:gray; color:white; border-radius:5px;">Calculate</button>
+            <button onclick="calculate()" id="Calculate">Calculate</button>
         </div>
         <div>
-            <label for "grade-needed">Grade Needed: </label>
+            <label for="grade-needed">Grade Needed: </label>
             <input id="grade-needed" type="text" readonly>
         </div>
         <br>
@@ -94,8 +71,5 @@
             <!-- javaScript -->
         </tbody>
     </table>
-
-
-    
 </body>
 </html>
