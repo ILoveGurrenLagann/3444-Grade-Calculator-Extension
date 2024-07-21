@@ -1,105 +1,114 @@
-
-:root{
-    --color-1: #ffffff;
-    --text-color-1: #076593;
-    --accent-color-1: #9c9c9c;
-
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    padding: 20px;
 }
 
-*{
-    margin:0;
-    padding:0;
-   
+h1, h2 {
+    color: #343a40;
 }
 
-h1{
-    margin: 0px;
+nav {
+    background-color: #343a40;
     padding: 10px;
+    color: white;
 }
 
-h2{
-    margin: 8px;
-    padding: 8px;
-}
-
-p{
-    margin: 6px;
-    padding: 6px;
-}
-body{
-    background: linear-gradient(#ffffff,hsl(213, 100%, 92%));
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    
-    
-
-
-    margin: 10px;
-    padding: 10px;
-    background-color: rgb(255, 255, 255);
-    color: #076593;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-    
-}   
-
-button{
-    padding: 3px;
-    margin: 2px
-
-}
-
-.wrap-box{
-    border-style: outset;
-    border-width: 5px;
-    border-color: #076593;
-    border-radius: 10px;
-    padding: 10px;
-
-}
-
-
-
-/* sidebar stuff */
-.container{
-    display: flex;
-    justify-content: space-evenly;
-}
-
-nav{
-    height: 60px;
-    background-color: var(--color-1);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-.links-container{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-nav a{
-    height: 100%;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
+nav a {
+    color: white;
     text-decoration: none;
-    color: var(--text-color-1)
-}
-nav a:hover{
-    background-color: var(--accent-color-1);
+    padding: 10px;
+    display: inline-block;
 }
 
-nav svg{
-    fill: var(--text-color-1)
+nav a:hover {
+    background-color: #495057;
 }
 
-#sidebar-active{
+.open-sidebar-button, .close-sidebar-button {
     display: none;
 }
 
-.open-sidebar-button, .close-sidebar-button{
-    display: none;
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ced4da;
+    border-radius: 5px;
+    background-color: white;
+}
+
+button {
+    font-size: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:active {
+    background-color: #004085;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.wrap-box {
+    background-color: white;
+    border: 1px solid #ced4da;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #e9ecef;
+}
+
+input[type="text"], input[type="hidden"], select {
+    border: 2px solid #ced4da;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 0;
+    width: calc(100% - 22px); 
+}
+
+@media (max-width: 600px) {
+    .open-sidebar-button {
+        display: inline-block;
+    }
+
+    .close-sidebar-button {
+        display: block;
+    }
+
+    .links-container {
+        display: none;
+    }
+
+    #sidebar-active:checked + .links-container {
+        display: block;
+    }
 }
