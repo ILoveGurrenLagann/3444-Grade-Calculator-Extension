@@ -28,34 +28,33 @@
     <hr>
     <h2>How Do I Use Canvas Grades?</h2>
     <p>
-        Using Canvas Grades is easy, simply paste in your grades page from canvas below, choose your desired grade from among the buttons, and then submit!
+        Using Canvas Grades is easy, simply choose your desired grade from among the buttons, paste in your grades page from canvas below,  and then submit!
     </p>
 
     <!--main--> 
     <div class="wrap-box">
-        <div>
-            <label for="entry">Enter Grades: </label><br/>
-            <textarea id="entry" name="entry" placeholder="Paste Your Grades Here" rows="20" cols="50"></textarea>
-        </div>
         <br>
+        <label>Select Desired Course Grade:</label></br>
         <button onClick="setGradeGoal('A')" id="A">A (90%-100%)</button>
         <button onClick="setGradeGoal('B')" id="B">B (80%-89%)</button>
         <button onClick="setGradeGoal('C')" id="C">C (70%-79%)</button>
         <button onClick="setGradeGoal('D')" id="D">D (60%-69%)</button>
-        <div>
-            <button onclick="submit()">Submit</button>
+        <div id="entryArea" style="display:none">
+            <label for="entry">Enter Grades: </label><br/>
+            <textarea id="entry" name="entry" placeholder="Click 'Paste' to Paste Course Information Here" rows="20" cols="50" readonly></textarea>
+            <button onClick="paste()">Paste</button>
+            <button onClick="submit()">Submit</button>
             <input type="hidden" id="errorBox" color="" readonly></input>
         </div>
-        <div>
-            <button onclick="reset()">Reset</button>
+        <br>
+        <div id="calcArea" style="display:none">
             <select id="calcSelect">
             </select>
-            <button onclick="calculate()" id="Calculate">Calculate</button>
-        </div>
-        <div>
+            <button onclick="calculate()" id="Calculate">Calculate</button></br>
             <label for="grade-needed">Grade Needed: </label>
             <input id="grade-needed" type="text" readonly>
         </div>
+            <button onclick="reset()">Reset</button>
         <br>
     </div>
     <h1>Homework Calendar</h1>
