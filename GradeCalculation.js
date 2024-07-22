@@ -6,6 +6,11 @@ export class Course {
       this.assignmentTypes = [];
     }
 
+    setDesiredAverage(paramAverage)
+    {
+        this.desiredAverage = paramAverage;
+    }
+
     addAssignmentType(name, weight) {
         let assignmentType = new AssignmentType(name, weight);
 
@@ -26,6 +31,10 @@ export class Course {
             //console.log(assignmentType.getAssignmentWeight());
 
         });
+    }
+    resetCourse()
+    {
+        this.name = "";
     }
 
     getName(){
@@ -84,23 +93,32 @@ export class Course {
     //EX: tests should be listed earlier than homework even if they are due at the same time.
     calcFutureGradesByType(){
         //let gradesNeededForEachWeight = [];
-        let index = 0;
         this.calculateAverage();
         let scoreNeeded = 0;
 
         this.assignmentTypes.forEach((assignmentType) => {
             //TODO: put a failsafe here, in case no grades are marked with an index of "-".
 
-            index = assignmentType.grades.findIndex(grade => grade.getScore() === "-"); //selects the first empty grade in each type's list, calculates based off that.
-
-            if (index === -1) {
+            let index = -1;
+            //index = assignmentType.grades.findIndex(grade => grade.getScore() === "-"); //selects the first empty grade in each type's list, calculates based off that.
+            var grades = assignmentType.getAssignments();
+            if(grades != undefined)
+            {
+                grades.forEach(grade => {
+                    index++;
+                    if(grade.getScore() === '-')
+                    {
+                        scoreNeeded = ((this.desiredAverage - (1 - assignmentType.getAssignmentWeight()) * this.average)/assignmentType.getAssignmentWeight()); //calculates needed score for first future assignment of that weight.=
+                        assignmentType.setScoreNeeded(scoreNeeded, index);
+                    }
+                })
+            }
+           /*  if (index === -1) {
                 //console.log(`No future assignment found for type ${assignmentType.getAssignmentName()}`);
                 return;
-            }
+            } */
   
-            scoreNeeded = ((this.desiredAverage - (1 - assignmentType.getAssignmentWeight()) * this.average)/assignmentType.getAssignmentWeight()); //calculates needed score for first future assignment of that weight.
-
-            assignmentType.setScoreNeeded(scoreNeeded, index);
+           
 
         });
         
