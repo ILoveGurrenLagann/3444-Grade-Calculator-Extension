@@ -1,3 +1,5 @@
+
+
 export class Course {
     constructor(name, desiredAverage) {
       this.name = name;
@@ -109,6 +111,7 @@ export class Course {
                     if(grade.getScore() === '-')
                     {
                         scoreNeeded = ((this.desiredAverage - (1 - assignmentType.getAssignmentWeight()) * this.average)/assignmentType.getAssignmentWeight()); //calculates needed score for first future assignment of that weight.=
+                        scoreNeeded = Math.ceil(scoreNeeded)
                         assignmentType.setScoreNeeded(scoreNeeded, index);
                     }
                 })
