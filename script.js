@@ -70,10 +70,7 @@ function submit() {
         currCourse.calculateAverage();
         currCourse.calcFutureGradesByType();
         
-        //dropdown.appendChild()
-        //console.log("incr");
-        var calcButton = document.getElementById("Calculate");
-        let neededGrade = currCourse.getNeededGrade("SRS In-class Review");
+        let neededGrade;
         if (neededGrade !== undefined) {
             console.log(neededGrade);
         } else {
@@ -106,10 +103,15 @@ function calculate()
     {
         grade = "Not possible: contact your professor.";
     }
+    else if(grade < 0)
+    {
+        grade = "Not possible to score low enough on this assignment to achieve a " + gradeGoal + " in this course. (you should still try to complete the assignment!!!)"
+    }
     output.value = grade;
 }
 function setGradeGoal(goal)
 {
+    document.getElementById("")
     switch(goal)
     {
         case 'A':
@@ -127,6 +129,7 @@ function setGradeGoal(goal)
     }
     if(courseCreated)
     {
+        console.log("HERE " + JSON.stringify(currCourse));
         currCourse.setDesiredAverage(gradeGoal);
         currCourse.calcFutureGradesByType();
         calculate();
@@ -136,6 +139,7 @@ function setGradeGoal(goal)
 function reset() {
     document.getElementById("entry").value = '';
     document.getElementById("calcArea").style = "display:none";
+    document.getElementById("grade-needed").value = '';
     var dropdown = document.getElementById("calcSelect");
     console.log("dropdown.children:");
     console.log(JSON.stringify(dropdown.children, null, 2));
@@ -224,16 +228,26 @@ function accessify(result){
        
         
         assgn_grade.splice(0, 2, grade);
-        for(let category of categories)
+        for(let category of categories) //
         {
             if(assgn_category === category[0])
             {
                 assignment[1] = [assgn_category, category[1]];
             }
         }
-        if(typeof(assignment[2]) != 'undefined' && assignment[2] != null && !assignment.includes(", 20"))
+        if(typeof(assignment[2]) != 'undefined' && assignment[2] != null && !assignment.includes(", 20")) //fix output errors that occur when the parser looks for a year but there isn't one available
         {
-            assignment[2] = assignment[2].slice(0, 6) + ", 2024" + assignment[2].slice(6);
+            let date = assignment[2].toString();
+            let splitYear = date.indexOf(", ,")
+            if (splitYear != -1)
+            {
+                assignment[2] = date.substring(0, splitYear + 1) + date.substring(splitYear + 1, splitYear + 10).replaceAll(",", "") + date.substring(splitYear + 10, date.length);
+            }
+           else //add year if current year isn't added in canvas
+           {
+                var currentYear = new Date().getFullYear().toString();
+                assignment[2] = assignment[2].slice(0, 6) + ", "+ currentYear + assignment[2].slice(6);
+           }
         }
     }
     //console.log("*************************************************");
